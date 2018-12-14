@@ -1,0 +1,35 @@
+create table buku (
+    id_buku int not null primary key AUTO_INCREMENT,
+    judul_buku varchar(200) not null,
+    keterangan text,
+    foto text,
+    jenis_buku varchar(30) not null,
+    tahun_terbit int not null,
+    penerbit varchar(200),
+    penulis varchar(50) not null,
+    stok_buku int not null
+);
+
+create table peminjam(
+    id_peminjam int not null PRIMARY key AUTO_INCREMENT,
+    nama varchar(50) not null,
+    alamat varchar(200) not null,
+    jenis_kelamin varchar(10) not null
+);
+
+create table admin(
+    username varchar(20) not null PRIMARY key,
+    kata_sandi varchar(64) not null,
+    level int not null,
+    nama_admin varchar(50) not null
+);
+create table meminjam(
+    id_pinjam int not null PRIMARY KEY AUTO_INCREMENT,
+    id_buku int not null,
+    id_peminjam int not null,
+    tanggal_pinjam date not null,
+    tanggal_kembali date not null,
+    banyak_buku int,
+    biaya_denda bigint,
+    status varchar(20)
+);
