@@ -132,20 +132,21 @@
           <!-- /.info-box -->
         </div>
         </div>
+        
+
       <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title">Daftar Buku</h3>
-        <div class="box-tools pull-right">
+         <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
                     title="Collapse">
               <i class="fa fa-minus"></i></button>
           </div>
         <div class="box-body">
             <div class="container-fluid pull-right">
-                <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahBuku">Tambah Buku</a>
-                <?php include('../jangan-buka/form/tambah.php') ?>
+                
             </div>
-            <di class="table-responsive" style="margin-top:50px">
+            <div class="table-responsive" style="margin-top:50px">
                 <table class="table" id="daftarBuku">
                     <thead>
                     <tr>
@@ -175,10 +176,8 @@
                                 </td>
                                 <td>
                                     <div>
-                                        <a href="">Hapus</a>
-                                    </div>
-                                    <div>
-                                        <a href="">Edit</a>
+                                        <a href="../jangan-buka/proses/proses.php?delete=<?php echo $buku['id_buku'] ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
+                                        <a href="" class="btn btn-warning"><i class="fa fa-cog"></i></a>
                                     </div>
                                 </td>
                             </tr>
@@ -186,6 +185,31 @@
                     </tbody>
                 </table>
             </div>
+        </div>
+      </div>
+      </div>
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">Tambah Buku</h3>
+         <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Tambah Buku">
+              <i class="fa fa-minus"></i></button>
+          </div>
+          <div class="box-body">
+              <?php include('../jangan-buka/form/tambah.php') ?>
+          </div>
+        </div>
+      </div>
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">Tambah Jenis Buku</h3>
+         <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Tambah Buku">
+              <i class="fa fa-minus"></i></button>
+          </div>
+          <div class="box-body">
+              <?php include('../jangan-buka/form/jenis_buku.php') ?>
+          </div>
         </div>
       </div>
 
