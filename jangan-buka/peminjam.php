@@ -18,7 +18,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
    <?php include('../config/style.php'); ?>
-    <title>Dashboard</title>
+    <title>Tambah Peminjam</title>
 </head>
 <body class="hold-transition skin-red-light sidebar-mini">
 <!-- Site wrapper -->
@@ -131,7 +131,7 @@
       </div>
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Peminjam</h3>
+          <h3 class="box-title"> Tambah Peminjam</h3>
 
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -141,22 +141,7 @@
         </div>
         <div class="box-body">
          <table class="table">
-             <tr>
-                 <th>No</th>
-                 <th>Nama Peminjam</th>
-                 <th>Banyak Buku</th>
-                 <th>Detail</th>
-                 <th>Status</th>
-                 <th>Aksi</th>
-             </tr>
-             <tr>
-                 <td></td>
-                 <td></td>
-                 <td></td>
-                 <td></td>
-                 <td></td>
-                 <td></td>
-             </tr>
+            
          </table>
         </div>
       </div>

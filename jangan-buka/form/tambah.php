@@ -20,7 +20,7 @@
                 <select name="jenis_buku" class="form-control" required>
                     <option value="">Pilih</option>
                     <?php 
-                        $query_jenis    =     "SELECT*FROM jenis_buku ORDER BY jenis_buku ASC";
+                        $query_jenis    =     "SELECT*FROM kategori ORDER BY jenis_buku ASC ";
                         $query_jenis_go =   mysqli_query($db,$query_jenis);
                         while($row = mysqli_fetch_array($query_jenis_go)){
                     ?>

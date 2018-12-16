@@ -81,6 +81,7 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">Navigasi Utama</li>
         <li class="treeview">
+        <li><a href="../jangan-buka/peminjam.php"><i class="fa fa-user"></i> <span>Tambah Peminjam</span></a></li>
             <li><a href="../jangan-buka/buku.php"><i class="fa fa-book"></i> <span>Olah Buku</span></a></li>
             <?php if($_SESSION['level'] == 2){ ?>
                 <li><a href="../jangan-buka/admin.php"><i class="fa fa-user"></i> <span>Olah Admin</span></a></li>
@@ -111,7 +112,7 @@
             <span class="info-box-icon bg-green"><i class="ion ion-ios-book"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Buku Tersedia</span>
+              <span class="info-box-text">Semua Buku</span>
               <span class="info-box-number"><?php echo mysqli_num_rows($query_buku_all_go); ?></span></span>
             </div>
             <!-- /.info-box-content -->
@@ -150,7 +151,7 @@
                 <table class="table" id="daftarBuku">
                     <thead>
                     <tr>
-                        <th>Gambar</th>
+                        <th>No.</th>
                         <th>Judul Buku</th>
                         <th>Banyak Buku</th>
                         <th>Keterangan</th>
@@ -159,11 +160,11 @@
                     </thead>
                     <tbody>
                         <?php 
-                            
+                            $no =1;
                             while($buku = mysqli_fetch_array($query_buku_all_go)){
                         ?>
                             <tr>
-                                <td></td>
+                                <td><?php echo $no++ ?></td>
                                 <td><?php echo $buku['judul_buku']; ?></td>
                                 <td><?php echo $buku['stok_buku']; ?></td>
                                 <td>
@@ -177,7 +178,8 @@
                                 <td>
                                     <div>
                                         <a href="../jangan-buka/proses/proses.php?delete=<?php echo $buku['id_buku'] ?>" class="btn btn-danger"><i class="fa fa-trash"></i></a>
-                                        <a href="" class="btn btn-warning"><i class="fa fa-cog"></i></a>
+                                        <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#edit<?php echo $buku['id_buku'] ?>"><i class="fa fa-cog"></i></a>
+                                        <?php include('../jangan-buka/form/edit_buku.php') ?>
                                     </div>
                                 </td>
                             </tr>
