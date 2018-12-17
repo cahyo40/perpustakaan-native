@@ -1,5 +1,6 @@
 <?php 
 include('../../config/db.php');
+session_start();
 //tambah jenis buku
 if(isset($_POST['kategori']) == "Tambah"){
     if($_POST['kategori']==null){
@@ -103,8 +104,37 @@ if(isset($_POST['peminjaman'])== "Proses"){
     }
     if(isset($_GET['hapus'])){
         $id_peminjam = $_GET['hapus'];
-        $query_hapus_daftar     = "DELETE FROM meminjam WHERE id_peminjam=$id_peminjam";
-        $query_hapus_daftar_go  = mysqli_query($db,$query_hapus_daftar);
+        $query_hapus_daftar     =   "DELETE FROM meminjam WHERE id_peminjam=$id_peminjam";
+        $query_hapus_peminjam   =   "DELETE FROM peminjam WHERE id_peminjam=$id_peminjam";
+        $query_hapus_daftar_go  =   mysqli_query($db,$query_hapus_daftar);
+        $query_hapus_peminjam   =   mysqli_query($db,$query_hapus_peminjam);
         header('location:../history.php');
+    }
+    if(isset($_GET['admin'])){
+        if($_SESSION['level'] == 2){
+        $username = $_POST['username'];
+        $password = md5($_POST['password']);
+        $nama_admin = $_POST['nama'];
+        $cek_admin  = mysqli_query($db,"SELECT*FROM admin where username='$username'");
+        if(mysqli_num_rows($cek_admin)==0){
+            $tambah_admin = "INSERT INTO admin VALUES('$username','$password','1','$nama_admin')";
+            mysqli_query($db,$tambah_admin);
+            header('location:../admin.php');
+        }else{
+            header('location:../admin.php');
+        }
+    }else{
+        header('location:../home.php');
+    }
+    }
+    if(isset($_GET['hapusadmin'])){
+        $username = $_GET['hapusadmin'];
+        mysqli_query($db,"DELETE FROM admin WHERE username='$username'");
+        header('location:../admin.php');
+    }
+    if(isset($_GET['resetpass'])){
+        $username = $_GET['hapusadmin'];
+        mysqli_query($db,"UPDATE admin SET password = mdt('admin12345') WHERE username='$username'");
+        header('location:../admin.php?pesan=berhasil');
     }
 ?>
