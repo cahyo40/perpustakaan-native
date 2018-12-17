@@ -73,7 +73,7 @@ if(isset($_POST['peminjaman'])== "Proses"){
             $query_update_stok_go = mysqli_query($db,$query_update_stok);
         }
     }
-    header('location:../peminjam.php');
+    header('location:../home.php');
 }
     if(isset($_GET['batal'])){
         $id_peminjam = $_GET['batal'];
@@ -100,5 +100,11 @@ if(isset($_POST['peminjaman'])== "Proses"){
         }
         $query_batal_minjam_go = mysqli_query($db,$query_batal_minjam);
         header('location:../home.php');
+    }
+    if(isset($_GET['hapus'])){
+        $id_peminjam = $_GET['hapus'];
+        $query_hapus_daftar     = "DELETE FROM meminjam WHERE id_peminjam=$id_peminjam";
+        $query_hapus_daftar_go  = mysqli_query($db,$query_hapus_daftar);
+        header('location:../history.php');
     }
 ?>

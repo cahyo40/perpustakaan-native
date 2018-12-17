@@ -84,6 +84,7 @@
         <li class="header">Navigasi Utama</li>
         <li class="treeview">
             <li><a href="../jangan-buka/peminjam.php"><i class="fa fa-user"></i> <span>Tambah Peminjam</span></a></li>
+            <li><a href="../jangan-buka/history.php"><i class="fa fa-clock-o"></i> <span>Riwayat Peminjaman</span></a></li>
             <li><a href="../jangan-buka/buku.php"><i class="fa fa-book"></i> <span>Olah Buku</span></a></li>
             <?php if($_SESSION['level'] == 2){ ?>
                 <li><a href="../jangan-buka/admin.php"><i class="fa fa-user"></i> <span>Olah Admin</span></a></li>

@@ -20,7 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
    <?php include('../config/style.php'); ?>
-    <title>Dashboard</title>
+    <title>Riwayat Peminjaman</title>
 </head>
 <?php if($_SESSION['level'] == 2){ ?>
   <body class="hold-transition skin-green sidebar-mini">
@@ -138,7 +138,7 @@
       </div>
       <div class="box">
         <div class="box-header with-border">
-          <h3 class="box-title">Peminjam</h3>
+          <h3 class="box-title">Riwayat Peminjam</h3>
 
           <div class="box-tools pull-right">
             <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
@@ -160,7 +160,7 @@
         <tbody>
           <?php 
             $no=1;
-            $query_view = "SELECT*FROM daftar_peminjam where status='dipinjam' GROUP BY nama";
+            $query_view = "SELECT*FROM daftar_peminjam where not status='dipinjam' GROUP BY nama";
             $query_view_go = mysqli_query($db,$query_view);
             while($row = mysqli_fetch_array($query_view_go)){
           ?>
@@ -189,14 +189,14 @@
                     </ul>
                     </div>
                  </td>
-                 <td><?php echo $row['status'] ?></td>
+                 <?php if($row['status'] == "dibatalkan"){ ?>
+                    <td><label class="label label-danger">Batal</label></td>
+                 <?php }else{ ?>
+                    <td><label class="label label-success">Kembali</label></td>
+                 <?php } ?>
                  <td>
                     <div>
-                    <div><a href="../jangan-buka/proses/proses.php?batal=<?php echo $row['id_peminjam'] ?>" class="btn btn-warning">Dibatalkan</a></div> 
-                    </div>
-                    <br>
-                    <div>
-                    <div><a href="../jangan-buka/proses/proses.php?kembali=<?php echo $row['id_peminjam'] ?>" class="btn btn-success">Dikembalikan</a></div>
+                    <div><a href="../jangan-buka/proses/proses.php?hapus=<?php echo $row['id_peminjam'] ?>" class="btn btn-danger">Hapus dari daftar</a></div>
                     </div>
                  </td>
              </tr>
