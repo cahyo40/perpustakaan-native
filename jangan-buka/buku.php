@@ -10,6 +10,8 @@
     }
     $query_buku_all     =   "SELECT*FROM buku";
     $query_buku_all_go  =   mysqli_query($db,$query_buku_all);
+    $query_peminjam_all =   "SELECT*FROM peminjam";
+    $query_peminjam_all_go = mysqli_query($db,$query_peminjam_all);
     $level = $_SESSION['level'];
 ?>
 <!DOCTYPE html>
@@ -21,7 +23,11 @@
    <?php include('../config/style.php'); ?>
     <title>Daftar Buku</title>
 </head>
-<body class="hold-transition skin-red-light sidebar-mini">
+<?php if($_SESSION['level'] == 2){ ?>
+  <body class="hold-transition skin-green sidebar-mini">
+<?php }else{?>
+  <body class="hold-transition skin-red-light sidebar-mini">
+<?php }  ?>
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -126,7 +132,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Peminjam Buku</span>
-              <span class="info-box-number">X</span>
+              <span class="info-box-number"><?php echo mysqli_num_rows($query_peminjam_all_go); ?></span>
             </div>
             <!-- /.info-box-content -->
           </div>

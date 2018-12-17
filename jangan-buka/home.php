@@ -10,6 +10,8 @@
     }
     $query_buku_all     =   "SELECT*FROM buku";
     $query_buku_all_go  =   mysqli_query($db,$query_buku_all);
+    $query_peminjam_all =   "SELECT*FROM peminjam";
+    $query_peminjam_all_go = mysqli_query($db,$query_peminjam_all);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +22,11 @@
    <?php include('../config/style.php'); ?>
     <title>Dashboard</title>
 </head>
-<body class="hold-transition skin-red-light sidebar-mini">
+<?php if($_SESSION['level'] == 2){ ?>
+  <body class="hold-transition skin-green sidebar-mini">
+<?php }else{?>
+  <body class="hold-transition skin-red-light sidebar-mini">
+<?php }  ?>
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -122,7 +128,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Peminjam Buku</span>
-              <span class="info-box-number">X</span>
+              <span class="info-box-number"><?php echo mysqli_num_rows($query_peminjam_all_go); ?></span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -140,23 +146,61 @@
           </div>
         </div>
         <div class="box-body">
-         <table class="table">
+         <table class="table" id="PinjamHome">
+         <thead>
              <tr>
                  <th>No</th>
                  <th>Nama Peminjam</th>
-                 <th>Banyak Buku</th>
                  <th>Detail</th>
                  <th>Status</th>
                  <th>Aksi</th>
              </tr>
+        </thead>
+        <tbody>
+          <?php 
+            $no=1;
+            $query_view = "SELECT*FROM daftar_peminjam where status='dipinjam' GROUP BY nama";
+            $query_view_go = mysqli_query($db,$query_view);
+            while($row = mysqli_fetch_array($query_view_go)){
+          ?>
              <tr>
-                 <td></td>
-                 <td></td>
-                 <td></td>
-                 <td></td>
-                 <td></td>
-                 <td></td>
+                 <td><?php echo $no++ ?></td>
+                 <td><?php echo $row['nama'] ?></td>
+                 <td>
+                    <div>
+                    <label>Waktu Peminjaman </label>
+                    <ul>
+                      <li>Tanggal Pinjam : <?php echo $row['tanggal_pinjam'] ?></li>
+                      <li>Tanggal Kembali : <?php echo $row['tanggal_kembali'] ?></li>
+                    </ul>
+                    </div>
+                    <div>
+                    <label>Daftar Buku</label>
+                    <ul>
+                      <?php 
+                        $id = $row['id_peminjam'];
+                        $query_buku = "SELECT*FROM daftar_peminjam WHERE id_peminjam = $id";
+                        $query_buku_go = mysqli_query($db,$query_buku);
+                        while($buku = mysqli_fetch_array($query_buku_go)){
+                      ?>
+                      <li><?php echo $buku['judul_buku'] ?></li>
+                      <?php }?>
+                    </ul>
+                    </div>
+                 </td>
+                 <td><?php echo $row['status'] ?></td>
+                 <td>
+                    <div>
+                    <div><a href="../jangan-buka/proses/proses.php?batal=<?php echo $row['id_peminjam'] ?>" class="btn btn-warning">Dibatalkan</a></div> 
+                    </div>
+                    <br>
+                    <div>
+                    <div><a href="../jangan-buka/proses/proses.php?kembali=<?php echo $row['id_peminjam'] ?>" class="btn btn-success">Dikembalikan</a></div>
+                    </div>
+                 </td>
              </tr>
+            <?php } ?>
+        </tbody>
          </table>
         </div>
       </div>

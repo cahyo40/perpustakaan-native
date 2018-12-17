@@ -23,6 +23,8 @@
 <script src="../config/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script>
   $(function () {
-    $('#daftarBuku').DataTable()
+    $('#daftarBuku').DataTable();
+    $('#tabelBukuPeminjam').DataTable();
+    $('#PinjamHome').DataTable();
   })
 </script>

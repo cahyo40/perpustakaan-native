@@ -39,7 +39,7 @@ if(isset($_GET['ubah'])){
    $edit_judul      =   $_POST['edit_judul'];
    $edit_penulis    =   $_POST['edit_penulis'] ;
    $edit_tahun      =   $_POST['edit_tahun'];
-   $edit_penerbit  =   $_POST['edit_penerbit'];
+   $edit_penerbit   =   $_POST['edit_penerbit'];
    $edit_jenis      =   strtolower($_POST['edit_jenis']);
    $edit_stok       =   $_POST['edit_stok'];
    $edit_keterangan =   $_POST['edit_keterangan'];
@@ -47,4 +47,58 @@ if(isset($_GET['ubah'])){
    $query_update_buku_go = mysqli_query($db,$query_update_buku);
    header('location:../buku.php');
 }
+
+if(isset($_POST['peminjaman'])== "Proses"){
+    $pilihan[]          = $_POST['pilihan'] ;
+    $peminjam           = $_POST['nama_peminjam'];
+    $alamat             = $_POST['alamat'];
+    $jk                 = $_POST['jk']  ;
+    $id_peminjam =null;
+    //menginsert data peminjam
+    $query_add_peminjam = "INSERT INTO peminjam VALUES(null,'$peminjam','$alamat','$jk')";
+    $query_add_peminjam_go = mysqli_query($db,$query_add_peminjam);
+    //mendapatkan id peminjam
+    $get_id_peminjam = "SELECT id_peminjam FROM peminjam ORDER BY id_peminjam DESC LIMIT 1";
+    $get_id_peminjam_go = mysqli_query($db,$get_id_peminjam);
+    $row = mysqli_fetch_array($get_id_peminjam_go);
+    $id_peminjam = $row['id_peminjam'];
+    //menambahkan ke meminjam
+    $tgl_pinjam         = $_POST['tgl_pinjam'];
+    $tgl_kembali        = $_POST['tgl_kembali'];
+    for($i=0;$i<count($_POST['pilihan']);$i++){
+        foreach($pilihan as $pilih){
+            $query_peminjam = "INSERT INTO meminjam VALUES(null,$pilih[$i],$id_peminjam,'$tgl_pinjam','$tgl_kembali',null,null,'dipinjam')";
+            $query_peminjam_go = mysqli_query($db,$query_peminjam);
+            $query_update_stok = "UPDATE buku SET stok_buku = stok_buku-1 where id_buku = $pilih[$i]";
+            $query_update_stok_go = mysqli_query($db,$query_update_stok);
+        }
+    }
+    header('location:../peminjam.php');
+}
+    if(isset($_GET['batal'])){
+        $id_peminjam = $_GET['batal'];
+        $query_batal_minjam     = "UPDATE meminjam SET status='dibatalkan' Where id_peminjam=$id_peminjam";
+        $query_stok             = "SELECT*FROM meminjam where id_peminjam=$id_peminjam";
+        $query_stok_go          = mysqli_query($db,$query_stok);
+        while($stok = mysqli_fetch_array($query_stok_go)){
+            $stoks = $stok['id_buku'];
+            $query_balik_stok   = "UPDATE buku SET stok_buku = stok_buku+1 where id_buku=$stoks";
+            $query_balik_stok_go    = mysqli_query($db,$query_balik_stok);
+        }
+        $query_batal_minjam_go  = mysqli_query($db,$query_batal_minjam);
+        header('location:../home.php');
+    }
+    if(isset($_GET['kembali'])){
+        $id_peminjam = $_GET['kembali'];
+        $query_batal_minjam     = "UPDATE meminjam SET status='dikembalikan' Where id_peminjam=$id_peminjam";
+        $query_stok             = "SELECT*FROM meminjam where id_peminjam=$id_peminjam";
+        $query_stok_go          = mysqli_query($db,$query_stok);
+        while($stok = mysqli_fetch_array($query_stok_go)){
+            $stoks = $stok['id_buku'];
+            $query_balik_stok   = "UPDATE buku SET stok_buku = stok_buku+1 where id_buku=$stoks";
+            $query_balik_stok_go    = mysqli_query($db,$query_balik_stok);
+        }
+        $query_batal_minjam_go = mysqli_query($db,$query_batal_minjam);
+        header('location:../home.php');
+    }
 ?>

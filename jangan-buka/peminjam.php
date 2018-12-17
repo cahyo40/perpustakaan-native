@@ -10,6 +10,8 @@
     }
     $query_buku_all     =   "SELECT*FROM buku";
     $query_buku_all_go  =   mysqli_query($db,$query_buku_all);
+    $query_peminjam_all =   "SELECT*FROM peminjam";
+    $query_peminjam_all_go = mysqli_query($db,$query_peminjam_all);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +22,11 @@
    <?php include('../config/style.php'); ?>
     <title>Tambah Peminjam</title>
 </head>
-<body class="hold-transition skin-red-light sidebar-mini">
+<?php if($_SESSION['level'] == 2){ ?>
+  <body class="hold-transition skin-green sidebar-mini">
+<?php }else{?>
+  <body class="hold-transition skin-red-light sidebar-mini">
+<?php }  ?>
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -122,7 +128,7 @@
 
             <div class="info-box-content">
               <span class="info-box-text">Peminjam Buku</span>
-              <span class="info-box-number">X</span>
+              <span class="info-box-number"><?php echo mysqli_num_rows($query_peminjam_all_go); ?></span>
             </div>
             <!-- /.info-box-content -->
           </div>
@@ -132,17 +138,66 @@
       <div class="box">
         <div class="box-header with-border">
           <h3 class="box-title"> Tambah Peminjam</h3>
-
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                    title="Collapse">
-              <i class="fa fa-minus"></i></button>
-          </div>
         </div>
         <div class="box-body">
-         <table class="table">
+        <form action="../jangan-buka/proses/proses.php" method="post">
+        <div class="form-group">
+            <label for="" class="label-control">Nama Peminjam</label>
+            <input type="text" name="nama_peminjam" required class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="" class="label-control">Alamat</label>
+            <input type="text" name="alamat" required class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="" class="label-control">Jenis Kelamin</label>
+            <select required name="jk" class="form-control">
+              <option value="laki-laki">Laki-Laki</option>
+              <option value="perempuan">Perempuan</option>
+            </select>
+        </div>
+         <table class="table" id="tabelBukuPeminjam">
+         <thead>
+            <tr>
+              <th>No.</th>
+              <th>Judul</th>
+              <th>Banyak Buku</th>
+              <th>Pilih</th>
+            </tr>
+            </thead>
+              <?php 
+              $no = 1;
+                while($row = mysqli_fetch_array($query_buku_all_go)){
+              ?>
+              <tbody>
+               <tr>
+              <td><?php echo $no++ ?></td> 
+              <td><?php echo $row['judul_buku']?></td>
+              <td><?php echo $row['stok_buku']?></td>
+              <td><input type="checkbox" name="pilihan[]" value="<?php echo $row['id_buku'] ?>"></td>
+              </tr>
+              </tbody>
+                <?php } ?>
             
          </table>
+            <div class="row">
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="" class="label-control">Tanggal Pinjam</label>
+                      <input required type="date" name="tgl_pinjam" id="" class="form-control">
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <label for="" class="label-control">Tanggal Kembali</label>
+                      <input required type="date" name="tgl_kembali" id="" class="form-control">
+                    </div>
+                  </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Proses" name="peminjaman" class="btn btn-primary">
+            </div>
+         </form>
         </div>
       </div>
 

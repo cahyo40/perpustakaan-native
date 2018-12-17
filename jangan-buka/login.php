@@ -17,11 +17,11 @@
                 <form action="#" method="post">
                     <div class="form-group">
                         <label for="" class="label-group">Username</label>
-                        <input type="text" name="username"  class="form-control">
+                        <input type="text" name="username"  required class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="" class="label-group">Kata Sandi</label>
-                        <input type="password" name="password"  class="form-control">
+                        <input type="password" name="password" required class="form-control">
                     </div>
                     <div class="form-group">
                         <input type="submit" name="Login" value="Masuk" class="form-control btn btn-primary">
