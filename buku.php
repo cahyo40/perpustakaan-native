@@ -87,6 +87,9 @@
                                 Buku tersedia : <?php echo $row['stok_buku'] ?>
                             </div>
                             <div>
+                                Jenis Buku : <?php echo $row['jenis_buku'] ?>
+                            </div>
+                            <div>
                                 Keterangan Lain : <?php echo $row['keterangan'] ?>
                             </div>
                         </td>
