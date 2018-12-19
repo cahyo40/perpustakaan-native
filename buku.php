@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="config/bower_components/Ionicons/css/ionicons.min.css">
   <link rel="stylesheet" href="config/dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="config/dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="glow.css">
+  <link rel="stylesheet" href="config/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <body class="hold-transition skin-green layout-top-nav">
@@ -29,7 +31,7 @@
 
         <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
         <ul class="nav navbar-nav">
-            <li><a href="buku.php">Daftar buku</a></li>
+            <li><a href="#">Daftar buku</a></li>
             <li><a href="jangan-buka/login.php">Login Admin</a></li>
         </ul>
         </div>
@@ -53,18 +55,46 @@
       <!-- Main content -->
       <section class="content">
         <div class="thumbnail container">
-            <div class="">
-                <h3 align="center">5 Buku Terbaru</h3>
-                <ul class="list-group">
+            <div class="container">
+                <h3 align="center">Daftar Seluruh Buku</h3>
+                <div class="glow-div"></div>
+                <table class="table table-bordered" id="daftarBuku">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Judul</th>
+                        <th>Penulis</th>
+                        <th>Tahun Tebit</th>
+                        <th>Penerbit</th>
+                        <th>Detail</th>
+                    </tr>
+                </thead>
+                <tbody>
                 <?php 
-                    $daftar_buku        = "SELECT*FROM buku ORDER BY id_buku DESC LIMIT 5";
+                    $no =1;
+                    $daftar_buku        = "SELECT*FROM buku";
                     $daftar_buku_go     = mysqli_query($db,$daftar_buku);
                     while($row=mysqli_fetch_array($daftar_buku_go)){
                 ?>
-                    <li class="list-group-item"><b>Judul Buku : <?php echo $row['judul_buku'] ?> (<?php echo $row['tahun_terbit'] ?>)</b></li>
+                    <tr>
+                        <td><?php echo $no++ ?></td>
+                        <td><?php echo $row['judul_buku'] ?></td>
+                        <td><?php echo $row['penulis'] ?></td>
+                        <td><?php echo $row['tahun_terbit'] ?></td>
+                        <td><?php echo $row['penerbit'] ?></td>
+                        <td>
+                            <div>
+                                Buku tersedia : <?php echo $row['stok_buku'] ?>
+                            </div>
+                            <div>
+                                Keterangan Lain : <?php echo $row['keterangan'] ?>
+                            </div>
+                        </td>
+                    </tr>
                     <?php } ?>
-                </ul>
-                <p align="center"><a href="buku.php">Lihat buku lebih banyak</a></p>
+                    </tbody>
+                    </table>
+                    <div class="glow-div-2"></div>
             </div>
         </div>
       </section>
@@ -81,5 +111,12 @@
 <script src="config/bower_components/fastclick/lib/fastclick.js"></script>
 <script src="config/dist/js/adminlte.min.js"></script>
 <script src="config/dist/js/demo.js"></script>
+<script src="config/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="config/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<script>
+  $(function () {
+    $('#daftarBuku').DataTable();
+  })
+</script>
 </body>
 </html>

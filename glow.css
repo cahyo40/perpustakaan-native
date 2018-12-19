@@ -1,0 +1,45 @@
+.glow-div {
+    width: 100%;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    color: #fff;
+    font-size: 12px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-family: sans-serif;
+    box-sizing: border-box;
+    background: linear-gradient(90deg, #4caf50, #8bc34a, #cddc39, #4caf50);
+    background-size: 400%;
+    animation: animate 80s linear infinite;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.glow-div-2 {
+    width: 100%;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    color: #fff;
+    font-size: 12px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-family: sans-serif;
+    box-sizing: border-box;
+    background: linear-gradient(90deg, #4caf50, #cddc39, #8bc34a, #4caf50);
+    background-size: 400%;
+    animation: animate 80s linear infinite;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+@keyframes animate {
+    0% {
+        background-position: 0%;
+    }
+
+    100% {
+        background-position: 400%;
+    }
+}
